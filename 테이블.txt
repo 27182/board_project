@@ -1,0 +1,9 @@
+--member 테이블
+seq, id, pw, nickname, create_date
+
+
+--board 테이블
+seq, title, context, nickname, date, recomm, decomm, visible
+
+--comment 테이블
+board_seq, context, nickname, date, visible
