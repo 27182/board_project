@@ -29,11 +29,9 @@ public class Comment{
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-//				System.out.println(rs.getInt("board_seq"));
 				System.out.println(rs.getString("context"));
 				System.out.println(rs.getString("nickname"));
 				System.out.println(rs.getDate("date"));
-//				System.out.println(rs.getInt("visible") + "\n");
 			}
 
 		} catch (Exception e) {
