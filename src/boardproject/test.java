@@ -13,18 +13,8 @@ public class test {
 		
 		try {
 		
-		String sql = "" +
-				"SELECT * " +
-				" FROM member;";
-			
-			//PreparedStatement 얻기 및 값 지정
-			PreparedStatement pstmt = c.prepareStatement(sql);
-			
-			
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				System.out.println(rs.getString("id"));
-			}
+		board b = new board(true, "admin");
+		b.showboard();
 
 			
 			
