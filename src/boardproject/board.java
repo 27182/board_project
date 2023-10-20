@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.mysql.cj.util.StringUtils;
+
 public class board {
     Connection conn = Connect.getConnection();
     Scanner sc = new Scanner(System.in);
@@ -23,11 +25,10 @@ public class board {
         this.mynickname = mynickname;
     }
 
-
     public void showboard() {
         System.out.println();
-        System.out.println("────────────────────────────── 게시글 목록 ──────────────────────────────");
-        System.out.println("no.│                  title                │ writer         │ date      ");
+        System.out.println("─────────────────────────────── 게시글 목록 ───────────────────────────────");
+        System.out.println("no.│                  title                  │ writer         │ date      ");
         try {
             String sql = "" +
                     "SELECT * " +
@@ -42,7 +43,7 @@ public class board {
                 if (rs.getInt("visible") == 0) {
                     continue;
                 }
-                System.out.println("─────────────────────────────────────────────────────────────────────────");
+                System.out.println("───────────────────────────────────────────────────────────────────────────");
                 num = rs.getInt("seq");
                 title = rs.getString("title");
                 writer = rs.getString("nickname");
@@ -50,14 +51,39 @@ public class board {
                 writingnums.add(num);
                 SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
                 String dateform = sdf.format(date);
+                int a = 41;
+                int count = 0;
+                for(int i = 0 ; i < title.length() ; i++){
+                    if(Character.getType(title.charAt(i)) == 5){
 
-                System.out.printf("%-3s│%-33s│%-13s│%-12s\n", num, title, writer, dateform);
+                        a--;
+                        count++;
+                        if(count ==20){
+                            title = title.substring(0, 20) + "...  ";
+                            break;
+                        }
+                    } 
+                }
+                int b =16;
+                for(int i = 0; i < writer.length() ; i++){
+                    if(Character.getType(writer.charAt(i)) == 5){
+                        b--;
+                        count++;
+                        if(count ==8){
+                            title = title.substring(0, 8) + "...  ";
+                            break;
+                        }
+                    } 
+                }
+
+        
+                System.out.printf("%-3s│%-"+a+"s│%-"+b+"s│%-10s\n", num, title, writer, dateform);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        System.out.println("─────────────────────────────────────────────────────────────────────────");
+        System.out.println("───────────────────────────────────────────────────────────────────────────");
 
         System.out.println("( 1: 게시글 보기 │ 2: 게시글 작성 │ 3: 종료 )");
 
@@ -163,7 +189,7 @@ public class board {
                 recomm = rs.getInt("recomm");
                 decomm = rs.getInt("decomm");
                 System.out.println();
-                System.out.println("─────────────────────────────────────────────────────────────────────────");
+                System.out.println("───────────────────────────────────────────────────────────────────────────");
                 System.out.println("제목: " + title);
                 System.out.println();
                 System.out.println("작성자: " + nickname);
@@ -175,7 +201,7 @@ public class board {
                 System.out.println("추천 수: " + recomm + " " + "비추천 수: " + decomm);
                 System.out.println();
                 System.out.println("댓글 수: " + commentnum);
-                System.out.println("─────────────────────────────────────────────────────────────────────────");
+                System.out.println("───────────────────────────────────────────────────────────────────────────");
 
                 if (nickname.equals(mynickname)) {
                     sc = new Scanner(System.in);
@@ -272,7 +298,8 @@ public class board {
                         stat = Integer.parseInt(sc.nextLine());
                         switch (stat) {
                             // 댓글 보기 메소드 추후 추가
-                            case 1: break;
+                            case 1:
+                                break;
 
                             case 6:
                                 return;
@@ -292,9 +319,11 @@ public class board {
                         stat = Integer.parseInt(sc.nextLine());
                         switch (stat) {
                             // 댓글 보기 메소드 추후 추가
-                            case 1: break;
-                                // 댓글 작성 메소드 추후 추가
-                            case 2: break;
+                            case 1:
+                                break;
+                            // 댓글 작성 메소드 추후 추가
+                            case 2:
+                                break;
 
                             case 3: {
                                 try {

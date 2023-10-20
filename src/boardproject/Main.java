@@ -25,7 +25,12 @@ public class Main {
             }
             switch(b) {
                 // 로그인 추가
-                case 1: break;
+                case 1: 
+                board bd1 = new board(true, "admin");
+                while(!board.programEnd){
+                    bd1.showboard();
+                }
+                break;
                 // 회원가입 추가
                 case 2: break;
 
@@ -34,6 +39,8 @@ public class Main {
                     while(!board.programEnd){
                     bd.showboard();
                     }
+
+                    c.close();
                 }
 
                 case 4: return;
