@@ -23,6 +23,7 @@ public class board {
         this.mynickname = mynickname;
     }
 
+
     public void showboard() {
         System.out.println();
         System.out.println("────────────────────────────── 게시글 목록 ──────────────────────────────");
@@ -112,6 +113,7 @@ public class board {
             }
 
             case 3:
+                programEnd = true;
                 return;
         }
 
@@ -127,6 +129,8 @@ public class board {
                 b = Integer.parseInt(a);
                 if (writingnums.contains(b)) {
                     return b;
+                } else {
+                    throw new Exception();
                 }
 
             } catch (Exception e) {
