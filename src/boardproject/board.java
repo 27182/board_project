@@ -12,8 +12,8 @@ public class board {
     Connection conn = Connect.getConnection();
     Scanner sc = new Scanner(System.in);
     ArrayList<Integer> writingnums = new ArrayList<>();
-    Boolean isLogin = false;
-    String mynickname = null;
+    static boolean isLogin = false;
+    static String mynickname = null;
     public static boolean programEnd = false;
 
     board() {
@@ -210,12 +210,19 @@ public class board {
                         System.out.println("( 1: 댓글 보기 │ 2: 댓글 작성 │ 3: 추천하기 │ 4: 비추천하기 │ 5: 글 삭제 │ 6: 돌아가기 )");
                         stat = Integer.parseInt(sc.nextLine());
                         switch (stat) {
-                            // 댓글 보기 메소드 추후 추가
-                            case 1:
+                            // 댓글 보기 메소드 
+                            case 1: {
+                                Comment cmmt = new Comment();
+                                cmmt.CommentRead();
                                 break;
-                            // 댓글 작성 메소드 추후 추가
-                            case 2:
+                            }
+                            // 댓글 작성 메소드 
+                            case 2: {
+                                Comment cmmt = new Comment();
+                                cmmt.CommentWrite();
                                 break;
+                            }
+                            
 
                             case 3: {
                                 try {
