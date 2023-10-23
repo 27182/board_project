@@ -29,13 +29,13 @@ public class Main {
                switch(b) {
                    // 로그인 추가
                    case 1: 
-                      login n = new login();
+                      {login n = new login();
                       n.log();
                    board bd1 = new board(login.loginn , login.nm);
                    while(!board.programEnd){
                        bd1.showboard();
                    }
-                   break;
+                   break;}
                    // 회원가입 추가
                    case 2:{
                       signup g = new signup();
