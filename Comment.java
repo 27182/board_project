@@ -33,6 +33,23 @@ public class Comment{
 				System.out.println("|작성시간 : " + rs.getDate("date") + " |\n");
 				
 			}
+			
+			String a = "";
+			int b = 0;
+
+			while(true){
+				System.out.println("( 1: 게시글로 돌아가기)");
+				a = sc.nextLine();
+				try {
+					b = Integer.parseInt(a);
+					if(b == 1){
+						return;
+					}
+					throw new Exception();
+				} catch (Exception e){
+					System.out.println("잘못된 입력입니다.");
+				}
+			}
 
 			
 		} catch (Exception e) {
@@ -54,10 +71,10 @@ public class Comment{
 			+ " VALUES( ? , ? , ? ) ";
 
 			PreparedStatement pstmt = c.prepareStatement(sql);
-			
+			String temp = board.mynickname;
 			System.out.println("댓글 입력: ");
 			pstmt.setString(1, sc.nextLine());
-			pstmt.setString(2, mynickname);
+			pstmt.setString(2, board.mynickname);
 			pstmt.setInt(3, board_number);
 			System.out.println("--댓글 작성 완료--");
 			
@@ -70,14 +87,44 @@ public class Comment{
 			}
 			pstmt.close();
 			
+			String sqlCount = ""
+					+ " SELECT boardproject.board.comment_count "
+					+ " FROM boardproject.board "
+					+ " WHERE boardproject.board.seq = " + board_number;
+			
+			PreparedStatement pstmt3 = c.prepareStatement(sqlCount);
+			ResultSet rs = pstmt3.executeQuery();
+			comment_count = rs.getInt("comment_count");
+			pstmt3.executeUpdate();
+			pstmt3.close();
+			
 			String sql2 = ""
 					+ " UPDATE boardproject.board " 
 					+ " SET boardproject.board.comment_count = ? "
 					+ " WHERE boardproject.board.seq = " + board_number;
 			
 			PreparedStatement pstmt2 = c.prepareStatement(sql2);
-			pstmt2.setInt(1, comment_count += 1);
+			pstmt2.setInt(1, comment_count+= 1);
+			pstmt2.executeUpdate();
 			pstmt2.close();
+
+
+			String a = "";
+			int b = 0;
+
+			while(true){
+				System.out.println("( 1: 게시글로 돌아가기)");
+				a = sc.nextLine();
+				try {
+					b = Integer.parseInt(a);
+					if(b == 1){
+						return;
+					}
+					throw new Exception();
+				} catch (Exception e){
+					System.out.println("잘못된 입력입니다.");
+				}
+			}
 			
 			
 		} catch (Exception e) {
