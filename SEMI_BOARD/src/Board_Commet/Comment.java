@@ -10,7 +10,7 @@ import BOARD_CONNECT.Connect;
 
 public class Comment{
 	
-
+	int comment_count;
 	
 	public void CommentRead(int board_number) {
 		Connection c = Connect.getConnection();
@@ -19,7 +19,7 @@ public class Comment{
 		try {
 			String sql = ""
 					+ " SELECT boardproject.comment.context , boardproject.comment.nickname , boardproject.comment.date "
-					+ " FROM boardproject.comment , boardproject.board "
+					+ " FROM boardproject.comment "
 					+ " WHERE boardproject.comment.board_number = ? ";
 			
 			PreparedStatement pstmt = c.prepareStatement(sql);
@@ -47,7 +47,7 @@ public class Comment{
 	public void CommentWrite(int board_number){
 		Connection c = Connect.getConnection();
 		Scanner sc = new Scanner(System.in);
-
+		
 		try {
 			
 			String sql = "" 
@@ -58,7 +58,6 @@ public class Comment{
 			
 			System.out.println("댓글 입력: ");
 			pstmt.setString(1, sc.nextLine());
-//			System.out.println("작성자 입력: ");
 			pstmt.setString(2, mynickname);
 			pstmt.setInt(3, board_number);
 			System.out.println("--댓글 작성 완료--");
@@ -70,8 +69,15 @@ public class Comment{
 			}else {
 				System.out.println("--댓글 " + rows + "개 작성 성공--");				
 			}
-			
 			pstmt.close();
+			
+			String sql2 = ""
+					+ " INSERT INTO boardproject.board( comment_count ) "
+					+ "VALUE ( ? ) ";
+			PreparedStatement pstmt2 = c.prepareStatement(sql2);
+			pstmt2.setInt(board_number, comment_count+=1);
+			pstmt2.close();
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
