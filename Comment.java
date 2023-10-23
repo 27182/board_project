@@ -10,7 +10,6 @@ import BOARD_CONNECT.Connect;
 
 public class Comment{
 	
-	int comment_count;
 	
 	public void CommentRead(int board_number) {
 		Connection c = Connect.getConnection();
@@ -87,6 +86,7 @@ public class Comment{
 			}
 			pstmt.close();
 			
+			int comment_count;
 			String sqlCount = ""
 					+ " SELECT boardproject.board.comment_count "
 					+ " FROM boardproject.board "
@@ -134,5 +134,25 @@ public class Comment{
 		}
 
 	}
+	
+	
+	
+	
+	public void CommentDelete() {
+		
+
+	}
+	
+	public void CommentUpdate() {
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
