@@ -6,12 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import boardproject.*;
 
 public class Comment{
-	
-
-	
+	int comment_count;
 	public void CommentRead(int board_number) {
 		Connection c = Connect.getConnection();
 		Scanner sc = new Scanner(System.in);
@@ -19,12 +16,11 @@ public class Comment{
 		try {
 			String sql = ""
 					+ " SELECT boardproject.comment.context , boardproject.comment.nickname , boardproject.comment.date "
-					+ " FROM boardproject.comment"
+					+ " FROM boardproject.comment "
 					+ " WHERE boardproject.comment.board_number = ? ";
 			
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			pstmt.setInt(1, board_number);
-			
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
@@ -34,6 +30,7 @@ public class Comment{
 				System.out.println("|작성시간 : " + rs.getDate("date") + " |\n");
 				
 			}
+
 
 
 			String a = "";
@@ -65,7 +62,7 @@ public class Comment{
 	public void CommentWrite(int board_number){
 		Connection c = Connect.getConnection();
 		Scanner sc = new Scanner(System.in);
-
+		
 		try {
 			
 			String sql = "" 
@@ -73,10 +70,9 @@ public class Comment{
 			+ " VALUES( ? , ? , ? ) ";
 
 			PreparedStatement pstmt = c.prepareStatement(sql);
-			
+			String temp = board.mynickname;
 			System.out.println("댓글 입력: ");
 			pstmt.setString(1, sc.nextLine());
-//			System.out.println("작성자 입력: ");
 			pstmt.setString(2, board.mynickname);
 			pstmt.setInt(3, board_number);
 			System.out.println("--댓글 작성 완료--");
@@ -88,8 +84,37 @@ public class Comment{
 			}else {
 				System.out.println("--댓글 " + rows + "개 작성 성공--");				
 			}
-			
 			pstmt.close();
+			
+			String sql2 = ""
+					+ " UPDATE boardproject.board " 
+					+ " SET boardproject.board.comment_count = ? "
+					+ " WHERE boardproject.board.seq = " + board_number;
+			
+			PreparedStatement pstmt2 = c.prepareStatement(sql2);
+			pstmt2.setInt(1, comment_count+= 1);
+			pstmt2.executeUpdate();
+			pstmt2.close();
+
+
+
+			String a = "";
+			int b = 0;
+
+			while(true){
+				System.out.println("( 1: 게시글로 돌아가기)");
+				a = sc.nextLine();
+				try {
+					b = Integer.parseInt(a);
+					if(b == 1){
+						return;
+					}
+					throw new Exception();
+				} catch (Exception e){
+					System.out.println("잘못된 입력입니다.");
+				}
+			}
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

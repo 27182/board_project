@@ -17,7 +17,6 @@ public class signup {
       
       
       try {
-         conn.setAutoCommit(false);
          String sql = "INSERT INTO  member (" 
                + ""
                + "    id" 
@@ -49,10 +48,8 @@ public class signup {
             System.out.println("저장 실패");
          } else {
             if (1 < count) {
-               conn.rollback();
-               System.out.println("회원정보 일부저장 : " + count);
+               System.out.println("오류");
             } else {
-               conn.commit();
                System.out.println("저장 성공 : " + count);
                return nickname;
             } 

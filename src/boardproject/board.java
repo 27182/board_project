@@ -15,6 +15,7 @@ public class board {
     public static boolean programEnd = false;
     boolean sct = false;
 
+
     board() {
 
     }
@@ -32,7 +33,8 @@ public class board {
             String sql = "" +
                     "SELECT * " +
                     "FROM board " +
-                    "ORDER BY seq DESC";
+                    "ORDER BY seq DESC"
+                    ;
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             int num;
