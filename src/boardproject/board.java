@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-
 public class board {
     Connection conn = Connect.getConnection();
     Scanner sc = new Scanner(System.in);
@@ -14,6 +13,7 @@ public class board {
     static boolean isLogin = false;
     static String mynickname = null;
     public static boolean programEnd = false;
+    boolean sct = false;
 
     board() {
 
@@ -52,31 +52,30 @@ public class board {
                 String dateform = sdf.format(date);
                 int a = 41;
                 int count = 0;
-                for(int i = 0 ; i < title.length() ; i++){
-                    if(Character.getType(title.charAt(i)) == 5){
+                for (int i = 0; i < title.length(); i++) {
+                    if (Character.getType(title.charAt(i)) == 5) {
 
                         a--;
                         count++;
-                        if(count ==20){
+                        if (count == 20) {
                             title = title.substring(0, 20) + "...  ";
                             break;
                         }
-                    } 
+                    }
                 }
-                int b =16;
-                for(int i = 0; i < writer.length() ; i++){
-                    if(Character.getType(writer.charAt(i)) == 5){
+                int b = 16;
+                for (int i = 0; i < writer.length(); i++) {
+                    if (Character.getType(writer.charAt(i)) == 5) {
                         b--;
                         count++;
-                        if(count ==8){
+                        if (count == 8) {
                             title = title.substring(0, 8) + "...  ";
                             break;
                         }
-                    } 
+                    }
                 }
 
-        
-                System.out.printf("%-3s│%-"+a+"s│%-"+b+"s│%-10s\n", num, title, writer, dateform);
+                System.out.printf("%-3s│%-" + a + "s│%-" + b + "s│%-10s\n", num, title, writer, dateform);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,8 +89,10 @@ public class board {
         switch (tem) {
             case 1: {
                 int adc = selectnumber();
-                // 댓글 수 추후 추가
-                showcontext(adc, 0);
+                sct = false;
+                while (!sct) {
+                    showcontext(adc);
+                }
                 break;
             }
             case 2: {
@@ -165,7 +166,7 @@ public class board {
         }
     }
 
-    public void showcontext(int writingnum, int commentnum) {
+    public void showcontext(int writingnum) {
         try {
             String sql = "" +
                     "SELECT * " +
@@ -181,6 +182,7 @@ public class board {
             int recomm;
             int decomm;
             int board_number;
+            int cmmt_count;
             while (rs.next()) {
                 board_number = rs.getInt("seq");
                 title = rs.getString("title");
@@ -189,6 +191,7 @@ public class board {
                 date = rs.getTimestamp("date");
                 recomm = rs.getInt("recomm");
                 decomm = rs.getInt("decomm");
+                cmmt_count = rs.getInt("comment_count");
                 System.out.println();
                 System.out.println("───────────────────────────────────────────────────────────────────────────");
                 System.out.println("제목: " + title);
@@ -201,7 +204,7 @@ public class board {
                 System.out.println();
                 System.out.println("추천 수: " + recomm + " " + "비추천 수: " + decomm);
                 System.out.println();
-                System.out.println("댓글 수: " + commentnum);
+                System.out.println("댓글 수: " + cmmt_count);
                 System.out.println("───────────────────────────────────────────────────────────────────────────");
 
                 if (nickname.equals(mynickname)) {
@@ -211,19 +214,18 @@ public class board {
                         System.out.println("( 1: 댓글 보기 │ 2: 댓글 작성 │ 3: 추천하기 │ 4: 비추천하기 │ 5: 글 삭제 │ 6: 돌아가기 )");
                         stat = Integer.parseInt(sc.nextLine());
                         switch (stat) {
-                            // 댓글 보기 메소드 
+                            // 댓글 보기 메소드
                             case 1: {
                                 Comment cmmt = new Comment();
                                 cmmt.CommentRead(board_number);
                                 break;
                             }
-                            // 댓글 작성 메소드 
+                            // 댓글 작성 메소드
                             case 2: {
                                 Comment cmmt = new Comment();
                                 cmmt.CommentWrite(board_number);
                                 break;
                             }
-                            
 
                             case 3: {
                                 try {
@@ -289,6 +291,7 @@ public class board {
                             }
 
                             case 6:
+                                sct = true;
                                 return;
 
                             default: {
@@ -306,13 +309,14 @@ public class board {
                         stat = Integer.parseInt(sc.nextLine());
                         switch (stat) {
                             // 댓글 보기 메소드 추후 추가
-                            case 1:{
+                            case 1: {
                                 Comment cmmt = new Comment();
                                 cmmt.CommentRead(board_number);
                                 break;
                             }
 
                             case 6:
+                                sct = true;
                                 return;
 
                             default: {
@@ -330,7 +334,7 @@ public class board {
                         stat = Integer.parseInt(sc.nextLine());
                         switch (stat) {
                             // 댓글 보기 메소드 추후 추가
-                            case 1:{
+                            case 1: {
                                 Comment cmmt = new Comment();
                                 cmmt.CommentRead(board_number);
                                 break;
@@ -387,6 +391,7 @@ public class board {
                             }
 
                             case 6:
+                                sct = true;
                                 return;
 
                             default: {
