@@ -6,21 +6,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import boardproject.Connect;
 
 public class Comment{
 	
 
-	public void CommentRead() {
+	
+	public void CommentRead(int board_number) {
 		Connection c = Connect.getConnection();
 		Scanner sc = new Scanner(System.in);
 		
 		try {
-	
 			String sql = ""
-					+ " SELECT * "
-					+ " FROM boardproject.comment ";
+					+ " SELECT boardproject.comment.context , boardproject.comment.nickname , boardproject.comment.date "
+					+ " FROM boardproject.comment , boardproject.board "
+					+ " WHERE boardproject.comment.board_number = ?";
 			
 			PreparedStatement pstmt = c.prepareStatement(sql);
+			pstmt.setInt(1, board_number);
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
@@ -31,21 +34,19 @@ public class Comment{
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			
-		}
+		} 
 	}
 	
 	
-	public void CommentWrite(){
+	public void CommentWrite(int board_number){
 		Connection c = Connect.getConnection();
 		Scanner sc = new Scanner(System.in);
 
 		try {
-		
+			
 			String sql = "" 
-			+ " INSERT INTO boardproject.comment( context ,nickname ) "
-			+ " VALUES( ? , ? ) ";
+			+ " INSERT INTO boardproject.comment( context ,nickname ,board_number ) "
+			+ " VALUES( ? , ? , ? ) ";
 
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			
@@ -54,7 +55,8 @@ public class Comment{
 			System.out.println("작성자 입력: ");
 			pstmt.setString(2, sc.nextLine());
 			System.out.println("댓글 작성 완료");
-
+			pstmt.setInt(3, board_number);
+			
 			
 			int rows = pstmt.executeUpdate();
 			if(rows == 0) {
@@ -67,7 +69,8 @@ public class Comment{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
+		
 
 	}
 

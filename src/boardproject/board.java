@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import com.mysql.cj.util.StringUtils;
 
 public class board {
     Connection conn = Connect.getConnection();
@@ -21,8 +20,8 @@ public class board {
     }
 
     board(boolean isLogin, String mynickname) {
-        this.isLogin = isLogin;
-        this.mynickname = mynickname;
+        board.isLogin = isLogin;
+        board.mynickname = mynickname;
     }
 
     public void showboard() {
@@ -33,7 +32,7 @@ public class board {
             String sql = "" +
                     "SELECT * " +
                     "FROM board " +
-                    "ORDER BY seq ASC";
+                    "ORDER BY seq DESC";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             int num;
@@ -181,7 +180,9 @@ public class board {
             Date date;
             int recomm;
             int decomm;
+            int board_number;
             while (rs.next()) {
+                board_number = rs.getInt("seq");
                 title = rs.getString("title");
                 context = rs.getString("context");
                 nickname = rs.getString("nickname");
@@ -213,13 +214,13 @@ public class board {
                             // 댓글 보기 메소드 
                             case 1: {
                                 Comment cmmt = new Comment();
-                                cmmt.CommentRead();
+                                cmmt.CommentRead(board_number);
                                 break;
                             }
                             // 댓글 작성 메소드 
                             case 2: {
                                 Comment cmmt = new Comment();
-                                cmmt.CommentWrite();
+                                cmmt.CommentWrite(board_number);
                                 break;
                             }
                             
@@ -305,8 +306,11 @@ public class board {
                         stat = Integer.parseInt(sc.nextLine());
                         switch (stat) {
                             // 댓글 보기 메소드 추후 추가
-                            case 1:
+                            case 1:{
+                                Comment cmmt = new Comment();
+                                cmmt.CommentRead(board_number);
                                 break;
+                            }
 
                             case 6:
                                 return;
@@ -326,11 +330,17 @@ public class board {
                         stat = Integer.parseInt(sc.nextLine());
                         switch (stat) {
                             // 댓글 보기 메소드 추후 추가
-                            case 1:
+                            case 1:{
+                                Comment cmmt = new Comment();
+                                cmmt.CommentRead(board_number);
                                 break;
+                            }
                             // 댓글 작성 메소드 추후 추가
-                            case 2:
+                            case 2: {
+                                Comment cmmt = new Comment();
+                                cmmt.CommentWrite(board_number);
                                 break;
+                            }
 
                             case 3: {
                                 try {
