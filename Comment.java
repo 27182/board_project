@@ -24,7 +24,6 @@ public class Comment{
 			
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			pstmt.setInt(1, board_number);
-			
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
@@ -72,10 +71,12 @@ public class Comment{
 			pstmt.close();
 			
 			String sql2 = ""
-					+ " INSERT INTO boardproject.board( comment_count ) "
-					+ "VALUE ( ? ) ";
+					+ " UPDATE boardproject.board " 
+					+ " SET boardproject.board.comment_count = ? "
+					+ " WHERE boardproject.board.seq = " + board_number;
+			
 			PreparedStatement pstmt2 = c.prepareStatement(sql2);
-			pstmt2.setInt(board_number, comment_count+=1);
+			pstmt2.setInt(1, comment_count += 1);
 			pstmt2.close();
 			
 			
