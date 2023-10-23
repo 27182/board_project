@@ -1,4 +1,4 @@
-package boardproject;
+package Board_Commet;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import boardproject.Connect;
+import BOARD_CONNECT.Connect;
 
 public class Comment{
 	
@@ -20,10 +20,9 @@ public class Comment{
 			String sql = ""
 					+ " SELECT boardproject.comment.context , boardproject.comment.nickname , boardproject.comment.date "
 					+ " FROM boardproject.comment , boardproject.board "
-					+ " WHERE boardproject.comment.board_number = ?";
+					+ " WHERE boardproject.comment.board_number = boardproject.board.seq ";
 			
 			PreparedStatement pstmt = c.prepareStatement(sql);
-			pstmt.setInt(1, board_number);
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
@@ -34,7 +33,15 @@ public class Comment{
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		} finally {
+			if (c != null) {
+				try {
+					c.close();
+					System.out.println("연결 끊기");
+				} catch (SQLException e) {
+				}
+			}
+		}
 	}
 	
 	
@@ -69,8 +76,16 @@ public class Comment{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (c != null) {
+				try {
+					// 연결 끊기
+					c.close();
+					System.out.println("연결 끊기");
+				} catch (SQLException e) {
+				}
+			}
 		}
-		
 
 	}
 
