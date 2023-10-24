@@ -28,7 +28,7 @@ public class board {
 
     public void showboard() {
         System.out.println();
-        System.out.println("─────────────────────────────── 게시글 목록 ───────────────────────────────");
+        System.out.println("──────────────────────────────── 게시글 목록 ────────────────────────────────");
         System.out.println("no.│                  title                  │ writer         │ date      ");
         try {
             String sql = "" +
@@ -45,13 +45,13 @@ public class board {
                 if (rs.getInt("visible") == 0) {
                     continue;
                 }
-                System.out.println("───────────────────────────────────────────────────────────────────────────");
+                System.out.println("─────────────────────────────────────────────────────────────────────────────");
                 num = rs.getInt("seq");
                 title = rs.getString("title");
                 writer = rs.getString("nickname");
                 date = rs.getTimestamp("date");
                 writingnums.add(num);
-                SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
+                SimpleDateFormat sdf = new SimpleDateFormat(" yy-MM-dd HH:mm");
                 String dateform = sdf.format(date);
                 int a = 41;
                 int count = 0;
@@ -84,7 +84,7 @@ public class board {
             e.printStackTrace();
         }
 
-        System.out.println("───────────────────────────────────────────────────────────────────────────");
+        System.out.println("─────────────────────────────────────────────────────────────────────────────");
 
         System.out.println("( 1: 게시글 보기 │ 2: 게시글 작성 │ 3: 종료 )");
 
@@ -109,7 +109,8 @@ public class board {
                     String title, context;
                     String imwriting = "";
                     System.out.println("제목을 입력해주세요");
-                    title = sc.nextLine();
+                    title = " ";
+                    title += sc.nextLine();
                     System.out.println();
                     System.out.println("내용을 입력해주세요. 입력을 완료하시려면 !stop 을 입력해주세요.");
                     StringBuilder sb = new StringBuilder();
@@ -196,7 +197,7 @@ public class board {
                 decomm = rs.getInt("decomm");
                 cmmt_count = rs.getInt("comment_count");
                 System.out.println();
-                System.out.println("───────────────────────────────────────────────────────────────────────────");
+                System.out.println("─────────────────────────────────────────────────────────────────────────────");
                 System.out.println("제목: " + title);
                 System.out.println();
                 System.out.println("작성자: " + nickname);
@@ -208,7 +209,7 @@ public class board {
                 System.out.println("추천 수: " + recomm + " " + "비추천 수: " + decomm);
                 System.out.println();
                 System.out.println("댓글 수: " + cmmt_count);
-                System.out.println("───────────────────────────────────────────────────────────────────────────");
+                System.out.println("─────────────────────────────────────────────────────────────────────────────");
 
                 if (nickname.equals(mynickname)) {
                     sc = new Scanner(System.in);

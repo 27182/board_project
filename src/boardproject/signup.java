@@ -39,7 +39,8 @@ public class signup {
             pstmt.setString(2, pw);
 
             System.out.println("닉네임을 입력하세요");
-            String nickname = s.nextLine();
+            String nickname = " ";
+            nickname += s.nextLine();
             pstmt.setString(3, nickname);
 
             int count = pstmt.executeUpdate();
