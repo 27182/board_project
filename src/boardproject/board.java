@@ -285,7 +285,10 @@ public class board {
                                     PreparedStatement pstmt3 = conn.prepareStatement(sqq);
                                     pstmt3.setInt(1, writingnum);
                                     pstmt3.executeUpdate();
-                                    System.out.println("삭제되었습니다.");
+                                    System.out.println();
+                                    System.out.println("글이 삭제되었습니다.");
+                                    System.out.println();
+                                    sct = true;
                                     return;
 
                                 } catch (Exception e) {

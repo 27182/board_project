@@ -70,13 +70,14 @@ public class Comment {
 			pstmt.setString(1, sc.nextLine());
 			pstmt.setString(2, board.mynickname);
 			pstmt.setInt(3, board_number);
-			System.out.println("--댓글 작성 완료--");
+			System.out.println();
 
 			int rows = pstmt.executeUpdate();
 			if (rows == 0) {
 				System.out.println("--댓글 작성실패--");
 			} else {
-				System.out.println("--댓글 " + rows + "개 작성 성공--");
+				System.out.println("댓글 작성 성공");
+				System.out.println();
 			}
 			pstmt.close();
 
