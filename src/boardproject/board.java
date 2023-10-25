@@ -67,12 +67,13 @@ public class board {
                     }
                 }
                 int b = 16;
+                count = 0;
                 for (int i = 0; i < writer.length(); i++) {
                     if (Character.getType(writer.charAt(i)) == 5) {
                         b--;
                         count++;
                         if (count == 8) {
-                            title = title.substring(0, 8) + "...  ";
+                            writer = writer.substring(0, 8) + "...  ";
                             break;
                         }
                     }
