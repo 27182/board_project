@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Comment {
@@ -22,11 +24,33 @@ public class Comment {
 			pstmt.setInt(1, board_number);
 			ResultSet rs = pstmt.executeQuery();
 
-			while (rs.next()) {
+			System.out.println();
 
-				System.out.println("댓글 내용: \n| " + rs.getString("context") + " |");
-				System.out.println("|작성자 : " + rs.getString("nickname") + " |");
-				System.out.println("|작성시간 : " + rs.getDate("date") + " |\n");
+			while (rs.next()) {
+				Date date =  rs.getTimestamp("date");
+				SimpleDateFormat sdf = new SimpleDateFormat(" yy-MM-dd HH:mm");
+                String dateform = sdf.format(date);
+				String context = rs.getString("context");
+				// int padder = 28;
+
+				// for (int i = 0; i < context.length(); i++) {
+                //     if (Character.getType(context.charAt(i)) == 5) {
+                //         padder--;
+                //     }
+                // }
+
+
+
+
+
+
+
+
+				System.out.println("| 작성자 :" + rs.getString("nickname") + "  (" + dateform + " ) |" );
+				// System.out.printf("|  내용  : " + "%-" + padder + "s" + " |\n",context);
+				System.out.printf("|  내용  : " + context + " |\n");
+				System.out.println();
+				System.out.println();
 
 			}
 

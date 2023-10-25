@@ -16,7 +16,6 @@ public class board {
     public static boolean programEnd = false;
     boolean sct = false;
 
-
     board() {
 
     }
@@ -34,8 +33,7 @@ public class board {
             String sql = "" +
                     "SELECT * " +
                     "FROM board " +
-                    "ORDER BY seq DESC"
-                    ;
+                    "ORDER BY seq DESC";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             int num;
@@ -197,13 +195,15 @@ public class board {
                 recomm = rs.getInt("recomm");
                 decomm = rs.getInt("decomm");
                 cmmt_count = rs.getInt("comment_count");
+                SimpleDateFormat sdf = new SimpleDateFormat(" yy-MM-dd HH:mm");
+                String dateform = sdf.format(date);
                 System.out.println();
                 System.out.println("─────────────────────────────────────────────────────────────────────────────");
                 System.out.println("제목: " + title);
                 System.out.println();
                 System.out.println("작성자: " + nickname);
                 System.out.println();
-                System.out.println("작성일시: " + date);
+                System.out.println("작성일시: " + dateform);
                 System.out.println();
                 System.out.println(context);
                 System.out.println();
