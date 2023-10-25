@@ -72,8 +72,8 @@ public class board {
                     if (Character.getType(writer.charAt(i)) == 5) {
                         b--;
                         count++;
-                        if (count == 8) {
-                            writer = writer.substring(0, 8) + "...  ";
+                        if (count == 6) {
+                            writer = writer.substring(0, 6) + "...  ";
                             break;
                         }
                     }
